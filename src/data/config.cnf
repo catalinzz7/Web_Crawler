@@ -1,0 +1,4 @@
+n_threads=2
+delay=100ms
+root_dir=src/data/Root_dir
+log_level=1
