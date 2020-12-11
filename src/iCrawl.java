@@ -1,6 +1,5 @@
-package Crawler;
 
-public interface iCrawlr {
+public interface iCrawl {
     boolean check_robots();
 
     void download_page();

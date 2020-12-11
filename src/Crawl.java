@@ -1,4 +1,3 @@
-package Crawler;
 
 import java.awt.*;
 import java.io.IOException;
@@ -9,7 +8,7 @@ import java.nio.file.ClosedWatchServiceException;
 import java.util.*;
 import java.util.List;
 
-public class Crawlr implements iCrawlr {
+public class Crawl implements iCrawl {
 
     private Robots robots;
     private Download download;
@@ -19,13 +18,13 @@ public class Crawlr implements iCrawlr {
     private String StoreFile;
     private int SearchLevel;
 
-    public Crawlr(){
+    public Crawl(){
         robots = new Robots();
         download = new Download();
         findURL = new FindURL();
     }
 
-    public Crawlr(String PageToDownload, int SearchLevel, String StoreFile){
+    public Crawl(String PageToDownload, int SearchLevel, String StoreFile){
         this.PageToDownload = PageToDownload;
         this.SearchLevel = SearchLevel;
         this.StoreFile = StoreFile;
@@ -136,7 +135,7 @@ public class Crawlr implements iCrawlr {
         List<String> pagesToDownload = findURL.Get_List_Pages_To_Download();
         for(String pageToDownload:pagesToDownload){
             //System.out.println(pageToDownload);
-            iCrawlr crawler = new Crawlr(pageToDownload, SearchLevel-1, "store");
+            iCrawl crawler = new Crawl(pageToDownload, SearchLevel-1, StoreFile);
             boolean iHaveAccess = crawler.check_robots();
             if (iHaveAccess) {
                 crawler.download_page();
