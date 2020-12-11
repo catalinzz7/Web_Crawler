@@ -1,4 +1,4 @@
-package Crawler;
+
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -68,10 +68,25 @@ public class Download {
                 BufferedInputStream in = new BufferedInputStream(http.getInputStream());
                 String currentExtension = pathFile.substring(pathFile.lastIndexOf("."), pathFile.length());
 
-                if (currentExtension.equals(".com")) {
+                String[] doNotModifyExtension = {".js",".css",".png",".svg",".gif",".jpg",".jpeg"};
+                boolean modifyExtension = true;
+
+                for(String acceptedExtension:doNotModifyExtension){
+                    if (acceptedExtension.contains(currentExtension)){
+                        modifyExtension = false;
+                        break;
+                    }
+                }
+
+                if (modifyExtension){
                     String nextExtension = ".html";
                     pathFile = pathFile.replaceAll(currentExtension, nextExtension);
                 }
+
+                //if (currentExtension.equals(".com")) {
+                    //String nextExtension = ".html";
+                    //pathFile = pathFile.replaceAll(currentExtension, nextExtension);
+                //}
                 FileOutputStream fos = new FileOutputStream(pathFile);
                 BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
                 byte[] buffer = new byte[1024];
