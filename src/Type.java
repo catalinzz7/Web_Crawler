@@ -4,6 +4,7 @@ import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.util.Vector;
 
+
 public class Type {
     private String extensie;
     private String urluri;
