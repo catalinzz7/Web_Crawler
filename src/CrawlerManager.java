@@ -3,32 +3,40 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Vector;
 
+/**
+ * Clasa implementeaza initializarea crawlerului (extrage datele din fisierul de  configurare si cel cu url-uri).
+ * URL-urile sunt puse intr-un Vector<String>, iar pentru a le gestiona mai usor avem la dispozitie si intr-un
+ * Vector<Int> id-urile corespondente. Fiecare element din fisierul de configurare are un geter implementat.
+ *
+ * @author Duica Marius
+ */
+
 public class CrawlerManager {
     private String conf_FileName_;
-    private String url_FileName_;
 
-    int threadsNumber_;
-    int delay_;
-    String root_dir_;
-    int log_Level_;
+   private int threadsNumber_;
+    private int delay_;
+    private String root_dir_;
+    private  int log_Level_;
 
     private Vector<String> urls_;
     private Vector<Integer>urls_id_;
 
-    public CrawlerManager(String confileName,String urlsFile) throws FileNotFoundException {
+    /**
+     * Constructorul clasei
+     * @param confileName numele fisierului de configurare
+     * @throws FileNotFoundException
+     */
+    public CrawlerManager(String confileName) throws FileNotFoundException {
         this.conf_FileName_=confileName;
-        this.url_FileName_=urlsFile;
         this.collect_Conf_Elements_();
     }
 
-    public void printFileNames_()
-    {
-        System.out.println(this.conf_FileName_+"    "+this.url_FileName_);
-    }
 
-    public Vector<String>getUrls() throws FileNotFoundException
+    //functia in care obtinem URL-urile
+    public Vector<String>getUrls(String urlsFile) throws FileNotFoundException
     {
-        String fileContent=new Scanner(new File(this.url_FileName_)).useDelimiter("\\Z").next();
+        String fileContent=new Scanner(new File(urlsFile)).useDelimiter("\\Z").next();
         String[]parts=fileContent.split("\n");
         this.urls_=new Vector<String>(parts.length);
         this.urls_id_=new Vector<Integer>(parts.length);
@@ -42,6 +50,7 @@ public class CrawlerManager {
         return this.urls_;
     }
 
+    //functia in care clasa obtine elementele din fisierul de configurare
     private void collect_Conf_Elements_() throws FileNotFoundException {
         String fileContent=new Scanner(new File(this.conf_FileName_)).useDelimiter("\\Z").next();
         String parts[]=fileContent.split("\n");
@@ -52,6 +61,9 @@ public class CrawlerManager {
         this.log_Level_=Integer.parseInt(parts[3].split("=")[1].trim());
     }
 
+    /**
+     * Mai jos sunt geterele elementelor din fisierul de configurare
+     */
     public String get_Rootdir_() {
         return root_dir_;
     }
