@@ -1,5 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -71,8 +73,10 @@ public class Crawler {
 
             else if (args[0].equals("sitemap"))
             {
-
+                Sitemap s = new Sitemap(store2);
+                s.start();
             }
+
 
 
 
