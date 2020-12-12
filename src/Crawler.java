@@ -11,26 +11,24 @@ public class Crawler {
 
     public static void main(String[] args) {
         System.out.println("Alegeti una dintre comenzile disponibile:");
-        System.out.println("1. Descarcare pagini: crawler crawl <config_file>");
+        System.out.println("1. Descarcare pagini: crawler crawl <config_file> <urls_file>");
         System.out.println("2. Cautare cuvant cheie: crawler search <key_word> <config_file>");
         System.out.println("3. Filtrare documente: crawler filter type <file_type> <config_file>");
         System.out.println("                       crawler filter size <max_size> <config_file>");
-        System.out.println("4. Creare sitemap: crawler sitemap");
+        System.out.println("4. Creare sitemap: crawler sitemap <config_file>");
 
         try {
-            CrawlerManager CM = new CrawlerManager("src/data/config.cnf", "src/data/URLs.txt");
-
-            Vector<String> v = CM.getUrls();
-            Integer P = CM.get_ThreadsNumber_();
-            Integer log = CM.get_LogLevel_();
-            String store = CM.get_Rootdir_();
-            String store2 = store.substring(0, store.length() - 1);
-
-
 
 
             if(args[0].equals("crawl"))
             {
+                CrawlerManager CM = new CrawlerManager(args[1]);
+
+                Vector<String> v = CM.getUrls(args[2]);
+                Integer P = CM.get_ThreadsNumber_();
+                Integer log = CM.get_LogLevel_();
+                String store = CM.get_Rootdir_();
+                String store2 = store.substring(0, store.length() - 1);
 
                 for(int i=0;i<P;i++)
                 {
@@ -45,6 +43,10 @@ public class Crawler {
 
             else if (args[0].equals("search"))
             {
+                CrawlerManager CM = new CrawlerManager(args[2]);
+                String store = CM.get_Rootdir_();
+                String store2 = store.substring(0, store.length() - 1);
+
                 Search src = new Search();
                 src.search(args[1], store2);
 
@@ -55,6 +57,10 @@ public class Crawler {
 
             else if (args[0].equals("filter"))
             {
+                CrawlerManager CM = new CrawlerManager(args[3]);
+                String store = CM.get_Rootdir_();
+                String store2 = store.substring(0, store.length() - 1);
+
                 if (args[1].equals("type"))
                 {
                     FilterType filt1 = new FilterType(store2, args[2]);
@@ -73,6 +79,10 @@ public class Crawler {
 
             else if (args[0].equals("sitemap"))
             {
+                CrawlerManager CM = new CrawlerManager(args[1]);
+                String store = CM.get_Rootdir_();
+                String store2 = store.substring(0, store.length() - 1);
+
                 Sitemap s = new Sitemap(store2);
                 s.start();
             }
