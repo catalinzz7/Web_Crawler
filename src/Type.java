@@ -13,8 +13,6 @@ public class Type {
         this.urluri = url;
         this.extensie = extensie;
     }
-
-
     public void run(){
         File files = new File(urluri);
         fisiere = files.list(new FilenameFilter() {
