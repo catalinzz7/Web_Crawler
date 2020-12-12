@@ -1,7 +1,20 @@
 import java.util.Vector;
 import java.lang.Math;
 
+/**
+ * Classname MyThread
+ * Implementeaza clasa MyThread ca extensie a
+ * clasei Thread pentru implementarea
+ * mecanismului de multithreading
+ * in procesul de descarcare recursiva
+ * a paginilor
+ *
+ * @author Catalin Raceanu
+ */
 class MyThread extends Thread {
+    /**
+     * Declararea membrilor
+     */
     private Thread t;
     private String threadName;
     private Vector<String> URLs;
@@ -10,9 +23,17 @@ class MyThread extends Thread {
     private String Store_dir;
     private Integer P;
 
+    /**
+     * Constructorul clasei MyThread
+     * @param name numele threadului
+     * @param id Id-ul threadului
+     * @param urlList Lista de site-uri
+     * @param log nivelul de parcurgere in adancime
+     * @param store directorul de stocare
+     * @param p numar de thread-uri
+     */
     MyThread( String name, Integer id, Vector<String> urlList, Integer log, String store, Integer p) {
         threadName = name;
-
         URLs = urlList;
         Thread_id = id;
         log_lvl = log;
@@ -20,13 +41,22 @@ class MyThread extends Thread {
         P=p;
     }
 
+    /**
+     * Functie run()
+     * Implementeaza functia ce va fi executata de
+     * fiecare thread in parte
+     */
     public void run() {
         Integer N = URLs.size();
 
         Integer start = (int)(Thread_id * Math.ceil(N/P));
         Integer end= (int)(Math.min(N, (Thread_id+1) * Math.ceil(N/P)));
 
-
+        /**
+         * Parcurgere paralela a listei de URL-uri
+         * si apelul clasei Crawl pentru
+         * descarcarea recursiva
+         */
         for(int i = start; i < end; i++)
         {
             iCrawl crawler = new Crawl(URLs.get(i), log_lvl, Store_dir);
@@ -45,6 +75,10 @@ class MyThread extends Thread {
 
     }
 
+    /**
+     * Functie start()
+     * Implementeaza crearea si initializarea threadurilor
+     */
     public void start () {
 
         if (t == null) {
