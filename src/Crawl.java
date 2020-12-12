@@ -222,7 +222,7 @@ public class Crawl implements iCrawl {
                 if (pageToDownload.contains(".")){
                     String Extension = pageToDownload.substring(pageToDownload.lastIndexOf("."),
                             pageToDownload.length());
-                    String[] UnsupportedExtensions = {".js",".css",".png",".svg",".gif",".jpg",".jpeg"};
+                    String[] UnsupportedExtensions = {".js",".css",".png",".svg",".gif",".jpg",".jpeg",".ico"};
                     for(String UnsupportedExtension:UnsupportedExtensions){
                         if (UnsupportedExtension.equals(Extension)){
                             isOk = false;

@@ -80,7 +80,7 @@ public class Download {
                 String currentExtension = pathFile.substring(pathFile.lastIndexOf("."), pathFile.length());
 
                 /* vector de Stringuri cu extensii ce nu trebuie modificate */
-                String[] doNotModifyExtension = {".js",".css",".png",".svg",".gif",".jpg",".jpeg"};
+                String[] doNotModifyExtension = {".js",".css",".png",".svg",".gif",".jpg",".jpeg",".ico"};
                 boolean modifyExtension = true;
 
                 /* verificare daca fisierul curent contine o extensie ce nu trebuie modificata */
@@ -96,7 +96,7 @@ public class Download {
                     String nextExtension = ".html";
                     pathFile = pathFile.replaceAll(currentExtension, nextExtension);
                 }
-
+                
                 FileOutputStream fos = new FileOutputStream(pathFile);
                 BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
                 byte[] buffer = new byte[1024];
