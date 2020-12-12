@@ -23,7 +23,7 @@ public class Type {
         });
     }
     public void Printare (){
-        for (String s : fisiere)
-            System.out.println(s);
+        for (String file : fisiere)
+            System.out.println(file);
     }
 }
