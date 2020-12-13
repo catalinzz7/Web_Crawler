@@ -106,10 +106,20 @@ public class Download {
                 while ((read = in.read(buffer, 0, 1024)) >= 0) {
                     bout.write(buffer, 0, read);
                 }
+                Log logger = Log.getInstance();
+                logger.AdaugareMesaj(" INFO: Am descarcat pagina " + pageToDownload + " !\n");
+
                 /* adaugare pagina in lista de pagini descarcate */
-                CollectPages.add_pages(pageToDownload);
+                CollectPages collectPages = CollectPages.getInstance();
+                collectPages.add_pages(pageToDownload);
+
                 bout.close();
                 in.close();
+            }
+            else{
+                Log logger = Log.getInstance();
+                logger.AdaugareMesaj("  WARNING: Pagina " + pageToDownload +
+                        " nu a putut fi descarcata ! Messaj de eroare " + http.getResponseCode() + " !\n");
             }
         }
         catch (IOException e) {
