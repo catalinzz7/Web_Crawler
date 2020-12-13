@@ -10,22 +10,40 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classname Sitemap
+ * Implementeaza clasa Sitemap ce are rolul de
+ * a crea un sitemap al unui site descarcat in
+ * store cu toate documentele si paginile gasite
+ *
+ * @author Catalin Raceanu
+ */
 public class Sitemap {
-
+    /**
+     * Declararea membrilor
+     */
     private String[] type_list = {"docx", "doc", "png", "jpg", "css", "js", "html"};
-
     private String Root_path;
-
     private File outFile;
+    private FileWriter myWriter;
 
-    FileWriter myWriter;
-
+    /**
+     * Constructor de clasa Sitemap
+     * @param root_dir directorul unde sunt descarcate paginile
+     */
     public Sitemap(String root_dir)
     {
         Root_path = root_dir;
 
     }
 
+    /**
+     * Functie start()
+     * Implementeaza listarea site-urilor descarcate
+     * Se alege un site
+     * Se incepe scrierea in fisier si cautarea documentelor
+     *
+     */
     public void start()
     {
         File file = new File(Root_path);
@@ -73,7 +91,14 @@ public class Sitemap {
     }
 
 
-
+    /**
+     * Functie listf()
+     * Implementeaza cautarea recursiva in toate
+     * subdirectaorele a fisierelor dupa extensie
+     * @param directoryName directorul in care se cauta
+     * @param s lista in care se salveaza numele
+     * @param type extensia fisierelor cautate
+     */
     public void listf(String directoryName, List<String> s, String type) {
 
         File directory = new File(directoryName);
@@ -106,6 +131,12 @@ public class Sitemap {
             }
     }
 
+    /**
+     * Functie create()
+     * Se face cautarea pornind de la o lista de extensii
+     * si se scrie in fisier
+     * @param link calea catre directorul radacina
+     */
     public void create(String link)
     {
 
