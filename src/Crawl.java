@@ -162,6 +162,11 @@ public class Crawl implements iCrawl {
                         }
                     }
                 }
+                else{
+                    Log logger = Log.getInstance();
+                    logger.AdaugareMesaj(" WARNING: Pagina " + PageToDownload +
+                            " nu a putut fi accesata ! Messaj de eroare " + http.getResponseCode() + " !\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -251,13 +256,14 @@ public class Crawl implements iCrawl {
     public void remove_existing_page() {
         List<String> pagesToDownload = findURL.Get_List_Pages_To_Download();
         List<String> allPagesToDownload = new ArrayList<>();
+        CollectPages collectPages = CollectPages.getInstance();
 
         /**
          * eliminarea din lista de pagini a
          * paginilor descarcate
          */
         for(String page:pagesToDownload){
-            for(String existingPage:CollectPages.Get_List_Existing_Page()){
+            for(String existingPage:collectPages.Get_List_Existing_Page()){
                 if (page.equals(existingPage)){
                     break;
                 }

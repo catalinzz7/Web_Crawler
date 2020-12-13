@@ -86,6 +86,11 @@ public class Robots {
                 }
                 return true;
             }
+            else{
+                Log logger = Log.getInstance();
+                logger.AdaugareMesaj(" WARNING: Pagina " + robots_path +
+                        " nu a putut fi accesata ! Messaj de eroare " + http.getResponseCode() + " !\n");
+            }
             if (http.getResponseCode()==404) {
                 return  true;
             }
