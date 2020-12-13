@@ -1,15 +1,35 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Clasa Search implementeaza cautarea unor URL-uri din directorul radacina dupa un anumit cuvant cheie.
+ * Cauta recursiv in directorul radacina si afiseaza URL-urile dupa frecventa de aparitie a cuvantului cheie.
+ *
+ * @author Dan Alexandru
+ */
+
 public class Search
 {
+    /*
+    mDir reprezinta root_dir-ul
+    urls contine URL-urile in care apare cuvantul cheie si numarul de aparitii
+    mKey reprezinta cuvantul cheie
+     */
+
     File mDir;
     Map<Integer, String> urls = new HashMap<Integer, String>();
     String mKey;
 
+    /*
+    constructorul
+     */
     public Search()
     {
     }
+
+    /*
+    functia de verificare a existentei root_dir
+     */
     public void search(String key,String dir)
     {
         this.mDir = new File(dir);
@@ -22,6 +42,10 @@ public class Search
         else
             System.out.println("Nu exista fisierul!");
     }
+
+    /*
+    Sortare URL-uri descrescator dupa frecventa de aparitie a cuvantului cheie si afisarea acestora
+     */
     public void print()
     {
         TreeMap< Integer, String> sorted = new TreeMap<>(Collections.reverseOrder());
@@ -29,6 +53,10 @@ public class Search
         for (Map.Entry<Integer, String> entry : sorted.entrySet())
             System.out.println(entry.getValue());
     }
+
+    /*
+    Functia de cautare recursiva in root_dir
+     */
     public void searchInTextFiles(String mKey,File dir)
     {
         File[] a = dir.listFiles();
@@ -41,6 +69,9 @@ public class Search
         }
     }
 
+    /*
+    Functia de cautare a cuvantului cheie si numararea aparitiei acestuia in fiecare URL
+    */
     private void searchInFile(String key,File f)
     {
         int count = 0;
@@ -66,6 +97,6 @@ public class Search
             System.err.println("Eroare: " + e.getMessage());
         }
         if(count>0)
-        urls.put(new Integer(count),f.toString());
+        urls.put(new Integer(count),f.toString()); //inserarea URL-ului in map
     }
 }
