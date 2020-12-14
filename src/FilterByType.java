@@ -66,7 +66,7 @@ public class FilterByType {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Nu am putut rula executia filtrarii.");
+            System.out.println("Nu am putut rula executia filtrarii.\n");
 
         }
     }
