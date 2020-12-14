@@ -4,6 +4,7 @@ import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.io.EOFException;
@@ -32,6 +33,7 @@ public class FilterByType {
     public FilterByType(String url, String extensie) {
         this.root = url;
         this.extensie = extensie;
+        this.fisiere = new ArrayList<String>();
     }
 
     /**
@@ -64,7 +66,7 @@ public class FilterByType {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Am aruncat exceptia");
+            System.out.println("Nu am putut rula executia filtrarii.");
 
         }
     }
