@@ -1,8 +1,5 @@
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -44,8 +41,7 @@ public class Sitemap {
      * Se incepe scrierea in fisier si cautarea documentelor
      *
      */
-    public void start()
-    {
+    public void start() throws FileNotFoundException {
         File file = new File(Root_path);
         System.out.println("Site-uri disponibile: ");
         String[] directories = file.list(new FilenameFilter() {
@@ -68,6 +64,8 @@ public class Sitemap {
 
         String fName = "src/data/" + site + ".txt";
 
+        Log.getInstance().writeToFile("INFO: Creare sitemap pentru " + site);
+
         try {
             outFile = new File(fName);
             if (outFile.createNewFile()) {
@@ -81,6 +79,7 @@ public class Sitemap {
             myWriter.write("\n");
 
         } catch (IOException e) {
+            Log.getInstance().writeToFile("ERROR: Eroare creare sitemap - nu s-a gasit fisierul");
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
