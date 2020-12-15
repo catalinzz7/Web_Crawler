@@ -66,7 +66,8 @@ public class FilterByType {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Nu am putut rula executia filtrarii.\n");
+            Log.getInstance().writeToFile("ERR : Nu am putut rula executia filtrarii dupa extensia "+ this.extensie + ".");
+            System.out.println("Nu am putut rula executia filtrarii dupa tip\n");
 
         }
     }
@@ -74,8 +75,16 @@ public class FilterByType {
      * Afisare de elemente care au extensia ce ne intereseaza.
      */
     public void Printare(){
+        if (this.fisiere.isEmpty())
+        {
+            System.out.println("Nu exista vreun fisier avand extensia " + this.extensie + ".");
+            Log.getInstance().writeToFile("WAR : Nu exista vreun fisier avand extensia " + this.extensie + ".");
+        }
+        else {
+
         for (String s : fisiere)
             System.out.println(s);
+    }
     }
 }
 

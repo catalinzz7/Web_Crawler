@@ -52,7 +52,7 @@ public class Size {
                 }
             }
         } catch (Exception e) {
-           Log.getInstance().writeToFile("Nu am putut realiza filtrarea dupa marime");
+           Log.getInstance().writeToFile("ERR : Nu am putut realiza filtrarea dupa marimea " + this.maxim + ".");
             System.out.println("Nu am putut realiza filtrarea dupa marime");
         }
 
@@ -65,12 +65,14 @@ public class Size {
     {
         if (fisiere.isEmpty()) {
             System.out.println("Nu exista vreun fisier avand mai putin de " + maxim + "MB.");
-            Log.getInstance().writeToFile("Nu exista vreun fisier avand mai putin de " + maxim + "MB.");
+            Log.getInstance().writeToFile("WAR : Nu exista vreun fisier avand mai putin de " + maxim + "MB.");
         }
-
-        for (String s : fisiere) {
-            System.out.println(s);
-            Log.getInstance().writeToFile("S-a realizat filtrarea dupa marime. Marime maxima : " + this.maxim);
-        }
+        else
+            {
+                for (String s : fisiere) {
+                    System.out.println(s);
+                    Log.getInstance().writeToFile("S-a realizat filtrarea dupa marime. Marime maxima : " + this.maxim);
+                    }
+            }
     }
 }
