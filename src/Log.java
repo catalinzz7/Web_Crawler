@@ -31,7 +31,8 @@ public class Log {
         try {
             out = new PrintWriter("log.txt");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Nu am putut realiza fisierul de log");
+            return;
         }
 
     }
@@ -41,7 +42,7 @@ public class Log {
      * @param str - stringul ce va fi scris in fisier
      *
      */
-    public synchronized void writeToFile (String str){
+    public synchronized void writeToFile(String str){
         LocalDateTime myLocalTime = LocalDateTime.now();
         DateTimeFormatter myFormateLocalTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
@@ -54,7 +55,7 @@ public class Log {
      *
      * @return obiectul unic de tip singleton
      */
-    public Log getInstance(){
+    public static Log getInstance(){
         return inst;
     }
 }
