@@ -12,7 +12,7 @@ import java.io.EOFException;
 /*
  Creare clasa de filtrare dupa tip, astfel incat utilizatorul
  sa poata vedea anumite fisiere avand extensii comune ( de ex : ".txt"
- pentru fisiere text, ".java" pentru fisiere java s.a.m.d.
+ pentru fisiere text, ".java" pentru fisiere java s.a.m.d.)
 
     @author MateiMunteanu
  */
