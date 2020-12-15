@@ -8,26 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.io.EOFException;
-/**
-/*
- Creare clasa de filtrare dupa tip, astfel incat utilizatorul
- sa poata vedea anumite fisiere avand extensii comune ( de ex : ".txt"
- pentru fisiere text, ".java" pentru fisiere java s.a.m.d.)
 
-    @author MateiMunteanu
+/**
+ * /*
+ * Creare clasa de filtrare dupa tip, astfel incat utilizatorul
+ * sa poata vedea anumite fisiere avand extensii comune ( de ex : ".txt"
+ * pentru fisiere text, ".java" pentru fisiere java s.a.m.d.)
+ *
+ * @author MateiMunteanu
  */
 
 public class FilterByType {
     /**
-    initializam elementele primite din main
- */
+     * initializam elementele primite din main
+     */
     private String extensie;
     private String root;
     private List<String> fisiere;
 
     /**
-     *
-     * @param url - va fi fisierul de root unde se salveaza paginile
+     * @param url      - va fi fisierul de root unde se salveaza paginile
      * @param extensie - extensia pe care o cautam
      */
     public FilterByType(String url, String extensie) {
@@ -66,25 +66,28 @@ public class FilterByType {
                 }
             }
         } catch (Exception e) {
-            Log.getInstance().writeToFile("ERR : Nu am putut rula executia filtrarii dupa extensia "+ this.extensie + ".");
-            System.out.println("Nu am putut rula executia filtrarii dupa tip\n");
+            Log.getInstance().writeToFile("ERR : Nu am putut rula executia filtrarii dupa extensia " + this.extensie + ".");
+            System.out.println("Nu am putut rula filtrarea dupa tip.");
 
         }
     }
+
     /**
      * Afisare de elemente care au extensia ce ne intereseaza.
      */
-    public void Printare(){
-        if (this.fisiere.isEmpty())
-        {
+    public void Printare() {
+        if (this.fisiere.isEmpty()) {
             System.out.println("Nu exista vreun fisier avand extensia " + this.extensie + ".");
             Log.getInstance().writeToFile("WAR : Nu exista vreun fisier avand extensia " + this.extensie + ".");
-        }
-        else {
+        } else {
 
-        for (String s : fisiere)
-            System.out.println(s);
-    }
+            for (String s : fisiere)
+                System.out.println("Fisier : " + s);
+
+
+            Log.getInstance().writeToFile("INFO : Am realizat filtrarea fisierelor avand extensia : " +this
+            .extensie + ".");
+        }
     }
 }
 

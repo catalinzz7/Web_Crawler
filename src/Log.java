@@ -28,13 +28,6 @@ public class Log {
     private Log()
     {
         super();
-        try {
-            out = new PrintWriter("log.txt");
-        } catch (FileNotFoundException e) {
-            System.out.println("Nu am putut realiza fisierul de log");
-            return;
-        }
-
     }
 
     /**
@@ -42,13 +35,20 @@ public class Log {
      * @param str - stringul ce va fi scris in fisier
      *
      */
-    public synchronized void writeToFile(String str){
+    public synchronized void writeToFile (String str){
+        try {
+            FileWriter file = new FileWriter("src\\data\\log.txt", true);
+            out = new PrintWriter(file);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         LocalDateTime myLocalTime = LocalDateTime.now();
         DateTimeFormatter myFormateLocalTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         String dateTime = myLocalTime.format(myFormateLocalTime);
         out.println("[" + dateTime + "]  :  " +  str);
-
+        out.close();
     }
 
     /**
