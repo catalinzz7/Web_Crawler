@@ -28,12 +28,6 @@ public class Log {
     private Log()
     {
         super();
-        try {
-            out = new PrintWriter("log.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -42,19 +36,26 @@ public class Log {
      *
      */
     public synchronized void writeToFile (String str){
+        try {
+            FileWriter file = new FileWriter("src\\data\\log.txt", true);
+            out = new PrintWriter(file);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         LocalDateTime myLocalTime = LocalDateTime.now();
         DateTimeFormatter myFormateLocalTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         String dateTime = myLocalTime.format(myFormateLocalTime);
         out.println("[" + dateTime + "]  :  " +  str);
-
+        out.close();
     }
 
     /**
      *
      * @return obiectul unic de tip singleton
      */
-    public Log getInstance(){
+    public static Log getInstance(){
         return inst;
     }
 }

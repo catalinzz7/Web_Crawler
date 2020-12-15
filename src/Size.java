@@ -22,8 +22,7 @@ public class Size {
     private List<String> fisiere;
 
     /**
-     *
-     * @param maxim - nr maxim de MB pe care sa il aiba fisierul.
+     * @param maxim    - nr maxim de MB pe care sa il aiba fisierul.
      * @param root_dir - fisierul root_dir din functia main (unde se descarca fisierele)
      */
     public Size(int maxim, String root_dir) {
@@ -35,15 +34,14 @@ public class Size {
     /**
      * Rularea propriu-zisa a aplicatiei.
      */
-    public void run()
-    {
+    public void run() {
         try {
             File directory = new File(root);
             File[] fList = directory.listFiles();
             if (fList != null) {
                 for (File fisier : fList) {
                     if (fisier.isFile()) {
-                       if (fisier.length() < maxim)
+                        if (fisier.length() < maxim)
                             fisiere.add(fisier.toString());
                     } else if (fisier.isDirectory()) {
                         this.root = fisier.toString();
@@ -52,8 +50,8 @@ public class Size {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Nu am putut rula executia filtrarii.\n");
-
+            Log.getInstance().writeToFile("ERR : Nu am putut realiza filtrarea dupa marimea " + this.maxim + ".");
+            System.out.println("Nu am putut realiza filtrarea dupa marime");
         }
 
     }
@@ -61,9 +59,16 @@ public class Size {
     /**
      * Printarea elementelor care au marimea mai mica de X MB
      */
-    private void Printare()
-    {
-        for (String s : fisiere)
-            System.out.println(s);
+    public void Printare() {
+        if (fisiere.isEmpty()) {
+            System.out.println("Nu exista vreun fisier avand mai putin de " + maxim + "MB.");
+            Log.getInstance().writeToFile("WAR : Nu exista vreun fisier avand mai putin de " + maxim + "MB.");
+        } else {
+            for (String s : fisiere) {
+                System.out.println(s);
+            }
+            Log.getInstance().writeToFile("INFO : S-a realizat filtrarea dupa marime. Marime maxima : " + this.maxim);
+
+        }
     }
 }
