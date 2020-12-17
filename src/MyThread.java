@@ -61,7 +61,7 @@ class MyThread extends Thread {
          */
         for(int i = start; i < end; i++)
         {
-            /*
+
             iCrawl crawler = new Crawl(URLs.get(i), log_lvl, Store_dir);
 
             boolean iHaveAccess = crawler.check_robots();
@@ -72,9 +72,6 @@ class MyThread extends Thread {
                 crawler.remove_existing_page();
                 crawler.recursive_download();
             }
-            */
-
-            System.out.println(i);
 
 
         }
