@@ -47,10 +47,12 @@ class MyThread extends Thread {
      * fiecare thread in parte
      */
     public void run() {
-        Integer N = URLs.size();
+        Double N = (double)URLs.size();
+        Double Pd = (double)P;
 
-        Integer start = (int)(Thread_id * Math.ceil(N/P));
-        Integer end= (int)(Math.min(N, (Thread_id+1) * Math.ceil(N/P)));
+
+        Integer start = (int)(Thread_id* Math.ceil(N/Pd));
+        Integer end= (int)(Math.min(N,(Thread_id+1)*Math.ceil(N/Pd)));
 
         /**
          * Parcurgere paralela a listei de URL-uri
@@ -59,6 +61,7 @@ class MyThread extends Thread {
          */
         for(int i = start; i < end; i++)
         {
+            /*
             iCrawl crawler = new Crawl(URLs.get(i), log_lvl, Store_dir);
 
             boolean iHaveAccess = crawler.check_robots();
@@ -69,6 +72,9 @@ class MyThread extends Thread {
                 crawler.remove_existing_page();
                 crawler.recursive_download();
             }
+            */
+
+            System.out.println(i);
 
 
         }
