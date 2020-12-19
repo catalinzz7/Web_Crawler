@@ -34,6 +34,9 @@ public class Crawler {
              * Apelul functiilor pentru optiunea
              * de descarcare recursiva a paginilor
              */
+
+
+
             if(args[0].equals("crawl"))
             {
                 CrawlerManager CM = new CrawlerManager(args[1]);
@@ -53,10 +56,14 @@ public class Crawler {
             }
 
 
+
             /**
              * Apelul functiilor pentru optiunea
              * de cautare a unui cuvant cheie
              */
+
+
+
             else if (args[0].equals("search"))
             {
                 CrawlerManager CM = new CrawlerManager(args[2]);
@@ -69,45 +76,61 @@ public class Crawler {
             }
 
 
+
             /**
              * Apelul functiilor pentru optiunea
              * de filtrare a documentelor descarcate
              */
+
+
+
             else if (args[0].equals("filter"))
             {
                 CrawlerManager CM = new CrawlerManager(args[3]);
                 String store = CM.get_Rootdir_();
                 String store2 = store.substring(0, store.length() - 1);
+
                 /**
                  * Filtrare dupa extensie
                  */
+
+
+
                 if (args[1].equals("type"))
                 {
-                    FilterType filt1 = new FilterType(store2, args[2]);
+                    FilterByType filt1 = new FilterByType(store2, args[2]);
                     filt1.run();
                     filt1.Printare();
                 }
+
                 /**
                  * Filtrare dupa dimensiunea maxima
                  */
+
+
+
                 if (args[1].equals("size"))
                 {
-                    Size filt2= new Size(0, Integer.parseInt(args[2]),store);
+                    Size filt2= new Size(Integer.parseInt(args[2]),store2);
                     filt2.run();
-
+                    filt2.Printare();
                 }
 
             }
+
 
             /**
              * Apelul functiilor pentru optiunea
              * de creare a unui sitemap
              */
+
+
+
             else if (args[0].equals("sitemap"))
             {
                 CrawlerManager CM = new CrawlerManager(args[1]);
                 String store = CM.get_Rootdir_();
-                String store2 = store.substring(0, store.length() - 1);
+                String store2 = store.substring(store.length() - 1);
 
                 Sitemap s = new Sitemap(store2);
                 s.start();
