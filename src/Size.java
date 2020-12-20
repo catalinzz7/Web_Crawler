@@ -41,7 +41,10 @@ public class Size {
             if (fList != null) {
                 for (File fisier : fList) {
                     if (fisier.isFile()) {
-                        if (fisier.length() < maxim)
+                        double fisSizeKB = fisier.length()/1024;
+                        double fisSizeMB = fisSizeKB/1024;
+
+                        if (fisSizeMB < maxim)
                             fisiere.add(fisier.toString());
                     } else if (fisier.isDirectory()) {
                         this.root = fisier.toString();
