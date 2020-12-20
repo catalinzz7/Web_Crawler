@@ -106,7 +106,7 @@ public class Crawl implements iCrawl {
                         " AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 
                 if (http.getResponseCode()>0 && http.getResponseCode()<400) {
-                    Scanner sc = new Scanner(url.openStream());
+                    Scanner sc = new Scanner(http.getInputStream());
                     StringBuffer sb = new StringBuffer();
                     /** initializarea vector stringuri cu
                        tag-uri relevante
@@ -155,16 +155,19 @@ public class Crawl implements iCrawl {
                                 /* parsarea liniei pentru obtinerea link-ului */
                                 if (attr.contains("\"")){
                                     String content = attr.substring(attr.indexOf("\"")+1,attr.length());
+
+                                    /* bug fixed */
+                                    if(content.contains("\"")){
                                     String final_content = content.substring(0,content.indexOf("\""));
                                     findURL.attribute(final_content,protocol,host,path);
+                                }
                                 }
                             }
                         }
                     }
                 }
                 else{
-                    Log logger = Log.getInstance();
-                    logger.AdaugareMesaj(" WARNING: Pagina " + PageToDownload +
+                    Log.getInstance().writeToFile("WARNING: Pagina " + PageToDownload +
                             " nu a putut fi accesata ! Messaj de eroare " + http.getResponseCode() + " !\n");
                 }
             }
@@ -243,6 +246,8 @@ public class Crawl implements iCrawl {
                 }
             }
         }
+
+        //findURL.clear();
     }
 
     /**

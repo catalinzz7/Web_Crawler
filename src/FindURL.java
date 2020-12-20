@@ -65,7 +65,7 @@ public class FindURL {
             finalHref = linkHref;
             pagesToDownload.add(finalHref);
         }
-        else if (linkHref.length()>4 && linkHref.substring(0,5).equals("http"))
+        else if (linkHref.length()>4 && linkHref.substring(0,4).equals("http"))
         {
             finalHref = linkHref;
             pagesToDownload.add(finalHref);
@@ -90,5 +90,9 @@ public class FindURL {
     public void Add_List_Pages_To_Download(List<String> allPagesToDownload) {
         pagesToDownload.clear();
         pagesToDownload.addAll(allPagesToDownload);
+    }
+
+    public void clear(){
+        pagesToDownload.clear();
     }
 }
