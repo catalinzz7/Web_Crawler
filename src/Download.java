@@ -1,9 +1,5 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +30,7 @@ public class Download {
             String pathFile = null;
 
             /* se formeaza calea */
-            if (path.isEmpty()) {
+            if (path.isEmpty() || path.equals("/")) {
                 pathDirectory = StoreFile + "/";
                 pathFile = StoreFile + "/" + host;
             }
@@ -57,69 +53,105 @@ public class Download {
             /* se elimina semnele neacceptate in denumirea directoarelor */
             pathDirectory = pathDirectory.replaceAll("[\\:*?\"<>|]", "-");
             pathFile = pathFile.replaceAll("[\\:*?\"<>|]", "-");
-            /* se extrage numele fisierului */
-            String fileName = pathFile.substring(pathFile.lastIndexOf("/")+1,pathFile.length());
 
-            if (!fileName.contains("."))
-            {
-                pathFile += ".html";
-            }
+            boolean nameIsToBig = false;
 
-            /* se creeaza directoarele */
-            Path create_dir = Paths.get(pathDirectory);
-            Files.createDirectories(create_dir);
-
-            pathFile = pathFile.replace("\\","");
-            URL url1 = new URL(pageToDownload);
-            HttpURLConnection http = (HttpURLConnection) url1.openConnection();
-            http.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11" +
-                    " (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-
-            if (http.getResponseCode()>0 && http.getResponseCode()<400) {
-                BufferedInputStream in = new BufferedInputStream(http.getInputStream());
-                String currentExtension = pathFile.substring(pathFile.lastIndexOf("."), pathFile.length());
-
-                /* vector de Stringuri cu extensii ce nu trebuie modificate */
-                String[] doNotModifyExtension = {".js",".css",".png",".svg",".gif",".jpg",".jpeg",".ico"};
-                boolean modifyExtension = true;
-
-                /* verificare daca fisierul curent contine o extensie ce nu trebuie modificata */
-                for(String acceptedExtension:doNotModifyExtension){
-                    if (acceptedExtension.contains(currentExtension)){
-                        modifyExtension = false;
+            String folderName = pathFile;
+            while(folderName.contains("/")){
+                String newName = folderName.substring(folderName.indexOf("/")+1, folderName.length());
+                if (newName.contains("/")) {
+                    String checkName = newName.substring(0, newName.indexOf("/"));
+                    if (checkName.length()>255){
+                        nameIsToBig = true;
                         break;
                     }
+                    folderName = newName.substring(newName.indexOf("/"), newName.length());
                 }
-
-                /* modificare extensie */
-                if (modifyExtension){
-                    String nextExtension = ".html";
-                    pathFile = pathFile.replaceAll(currentExtension, nextExtension);
+                else{
+                    String checkName = newName;
+                    if (checkName.length()>255){
+                        nameIsToBig = true;
+                        break;
+                    }
+                    folderName = newName.substring(newName.indexOf("/")+1, newName.length());
                 }
-                
-                FileOutputStream fos = new FileOutputStream(pathFile);
-                BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-                byte[] buffer = new byte[1024];
-                int read = 0;
-
-                /* descarcarea pagina */
-                while ((read = in.read(buffer, 0, 1024)) >= 0) {
-                    bout.write(buffer, 0, read);
-                }
-                Log logger = Log.getInstance();
-                logger.AdaugareMesaj(" INFO: Am descarcat pagina " + pageToDownload + " !\n");
-
-                /* adaugare pagina in lista de pagini descarcate */
-                CollectPages collectPages = CollectPages.getInstance();
-                collectPages.add_pages(pageToDownload);
-
-                bout.close();
-                in.close();
             }
-            else{
-                Log logger = Log.getInstance();
-                logger.AdaugareMesaj("  WARNING: Pagina " + pageToDownload +
-                        " nu a putut fi descarcata ! Messaj de eroare " + http.getResponseCode() + " !\n");
+            boolean exist = false;
+            Path path1 = Paths.get(pathDirectory);
+            if (Files.exists(path1)){
+                exist = true;
+            }
+
+            if(!nameIsToBig && !exist) {
+                /* se extrage numele fisierului */
+                String fileName = pathFile.substring(pathFile.lastIndexOf("/") + 1, pathFile.length());
+
+                if (!fileName.contains(".")) {
+                    pathFile += ".html";
+                }
+
+                /* se creeaza directoarele */
+                Path create_dir = Paths.get(pathDirectory);
+                Files.createDirectories(create_dir);
+
+                pathFile = pathFile.replace("\\", "");
+                URL url1 = new URL(pageToDownload);
+
+                /* server redirect - bug fixed */
+                HttpURLConnection.setFollowRedirects(false);
+
+                HttpURLConnection http = (HttpURLConnection) url1.openConnection();
+                http.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11" +
+                        " (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+
+                if (http.getResponseCode() > 0 && http.getResponseCode() < 400) {
+                    BufferedInputStream in = new BufferedInputStream(http.getInputStream());
+                    String currentExtension = pathFile.substring(pathFile.lastIndexOf("."), pathFile.length());
+
+                    /* vector de Stringuri cu extensii ce nu trebuie modificate */
+                    String[] doNotModifyExtension = {".js", ".css", ".png", ".svg", ".gif", ".jpg", ".jpeg", ".ico"};
+                    boolean modifyExtension = true;
+
+                    /* verificare daca fisierul curent contine o extensie ce nu trebuie modificata */
+                    for (String acceptedExtension : doNotModifyExtension) {
+                        if (acceptedExtension.contains(currentExtension)) {
+                            modifyExtension = false;
+                            break;
+                        }
+                    }
+
+                    /* modificare extensie */
+                    if (modifyExtension) {
+                        String nextExtension = ".html";
+                        if (!currentExtension.equals(nextExtension)) {
+                            pathFile = pathFile.replaceAll(currentExtension, nextExtension);
+                        }
+                    }
+
+                    FileOutputStream fos = new FileOutputStream(pathFile);
+                    BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+                    byte[] buffer = new byte[1024];
+                    int read = 0;
+
+                    /* descarcarea pagina */
+                    while ((read = in.read(buffer, 0, 1024)) >= 0) {
+                        bout.write(buffer, 0, read);
+                    }
+                    Log.getInstance().writeToFile("INFO: Am descarcat pagina " + pageToDownload + " !\n");
+
+                    /* adaugare pagina in lista de pagini descarcate */
+                    CollectPages collectPages = CollectPages.getInstance();
+                    collectPages.add_pages(pageToDownload);
+
+                    bout.close();
+                    in.close();
+                } else {
+                    Log.getInstance().writeToFile("WARNING: Pagina " + pageToDownload +
+                            " nu a putut fi descarcata ! Messaj de eroare " + http.getResponseCode() + " !\n");
+                }
+            }else{
+                Log.getInstance().writeToFile("WARNING: Pagina " + pageToDownload +
+                        " nu a putut fi descarcata ! Numele fisierului este prea mare !\n");
             }
         }
         catch (IOException e) {
