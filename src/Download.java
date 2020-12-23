@@ -76,13 +76,13 @@ public class Download {
                     folderName = newName.substring(newName.indexOf("/")+1, newName.length());
                 }
             }
-            boolean exist = false;
-            Path path1 = Paths.get(pathDirectory);
-            if (Files.exists(path1)){
-                exist = true;
-            }
+     //       boolean exist = false;
+       //     Path path1 = Paths.get(pathDirectory);
+      //      if (Files.exists(path1)){
+      //          exist = true;
+       //     }
 
-            if(!nameIsToBig && !exist) {
+           if(!nameIsToBig) {
                 /* se extrage numele fisierului */
                 String fileName = pathFile.substring(pathFile.lastIndexOf("/") + 1, pathFile.length());
 
