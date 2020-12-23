@@ -36,15 +36,14 @@ public class Crawler {
              */
 
 
-
             if(args[0].equals("crawl"))
             {
                 CrawlerManager CM = new CrawlerManager(args[1]);
 
                 Vector<String> v = CM.getUrls(args[2]);
-                Integer P = CM.get_ThreadsNumber_();
-                Integer log = CM.get_LogLevel_();
-                String store = CM.get_Rootdir_();
+                Integer P = CM.getThreadsNumber_();
+                Integer log = CM.getLog_Level_();
+                String store = CM.getRoot_dir_();
                 String store2 = store.substring(0, store.length() - 1);
 
                 for(int i=0;i<P;i++)
@@ -67,7 +66,7 @@ public class Crawler {
             else if (args[0].equals("search"))
             {
                 CrawlerManager CM = new CrawlerManager(args[2]);
-                String store = CM.get_Rootdir_();
+                String store = CM.getRoot_dir_();
                 String store2 = store.substring(0, store.length() - 1);
 
                 Search src = new Search();
@@ -87,7 +86,7 @@ public class Crawler {
             else if (args[0].equals("filter"))
             {
                 CrawlerManager CM = new CrawlerManager(args[3]);
-                String store = CM.get_Rootdir_();
+                String store = CM.getRoot_dir_();
                 String store2 = store.substring(0, store.length() - 1);
 
                 /**
@@ -129,12 +128,14 @@ public class Crawler {
             else if (args[0].equals("sitemap"))
             {
                 CrawlerManager CM = new CrawlerManager(args[1]);
-                String store = CM.get_Rootdir_();
-                String store2 = store.substring(store.length() - 1);
+                String store = CM.getRoot_dir_();
+                String store2 = store.substring(0, store.length() - 1);
 
                 Sitemap s = new Sitemap(store2);
                 s.start();
-            }
+           }
+
+
 
 
 
